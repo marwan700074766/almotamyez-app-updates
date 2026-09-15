@@ -1,0 +1,8 @@
+version: 3.24.16
+files:
+  - url: Sarafa-Setup-3.24.16.exe
+    sha512: 41e503d
+    size: 109051904
+path: Sarafa-Setup-3.24.16.exe
+sha512: 41e503d
+releaseDate: '2026-09-15T19:45:00.000Z'
