@@ -1,0 +1,8 @@
+{
+  "name": "almotamyez-app",
+  "version": "3.24.16",
+  "dependencies": {
+    "@google/genai": "^2.22.0",
+    "dotenv": "^17.4.2"
+  }
+}

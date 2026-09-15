@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نظام صراف لإدارة الصرافة والحوالات</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="print.css" />
+  <link rel="stylesheet" href="typography-clarity.css" />
+  <link rel="stylesheet" href="official-stationery.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <header class="command-shell" aria-label="شريط أوامر نظام صراف">
+      <div class="system-band">
+        <div class="brand brand-inline">
+          <div class="brand-mark">ص</div>
+          <div><strong>صراف</strong><small>نظام الصرافة والحوالات المحلي</small></div>
+        </div>
+        <div class="global-search-wrap">
+          <input id="globalSearchInput" type="search" placeholder="بحث شامل: سند، حوالة، عميل، هاتف، حساب" autocomplete="off" aria-label="بحث شامل">
+          <button id="globalSearchButton" type="button" title="بحث شامل">⌕</button>
+          <div id="globalSearchResults" class="global-search-results" hidden></div>
+        </div>
+        <div class="system-status">
+          <div class="session-chip"><span class="online"></span><strong id="sessionName">مدير النظام</strong><small id="sessionRole">الفرع الرئيسي</small><span class="session-version-badge" id="sessionVersionBadge" title="رقم إصدار التطبيق الحالي"><span>إصدار التطبيق</span><b id="sessionVersionValue">3.24.9</b></span></div>
+          <div class="inline-connection-state" id="topConnectionChip" aria-live="polite"><span class="top-connection-dot" aria-hidden="true"></span><span id="topConnectionLabel">جارٍ فحص الاتصال المحلي…</span><button class="connection-refresh" type="button" onclick="refreshTopConnectionStatus()" title="تحديث حالة الاتصال" aria-label="تحديث حالة الاتصال">⟳</button></div>
+          <div class="date-box"><span>السنة المالية</span><strong id="fiscalYear">2026</strong></div>
+          <button class="alert-trigger" id="alertCenterButton" type="button" title="مركز التنبيهات">♢ <span id="alertCount" hidden>0</span></button>
+          <button class="top-update" id="appUpdateButton" type="button" title="فحص التحديث وتنزيله من داخل التطبيق"><span aria-hidden="true">⟳</span><b>تحديث الآن</b></button>
+          <button class="top-exit" id="logoutBtn" type="button">خروج النظام</button>
+        </div>
+      </div>
+      <nav class="command-toolbar" aria-label="العمليات الرئيسية">
+        <button class="toolbar-btn home-btn toolbar-home active" data-view="dashboard" type="button" title="الرئيسية"><span class="toolbar-symbol">⌂</span>الرئيسية</button>
+        <button class="toolbar-btn quick-entry-command toolbar-quick" data-window="quick-entry" type="button" title="إدخال سريع للعمليات"><span class="toolbar-symbol">⚡</span>إدخال سريع</button>
+        <button class="toolbar-btn calculator-command toolbar-calculator" data-window="calculator" type="button" title="حاسبة"><span class="toolbar-symbol calculator-app-icon" aria-hidden="true"><svg viewBox="0 0 30 24" focusable="false"><rect x="4" y="2" width="22" height="20" rx="3" fill="none" stroke="#dff5ff" stroke-width="1.5"/><rect x="7" y="5" width="16" height="4" rx="1" fill="#effaff"/><rect x="7" y="12" width="4" height="3" rx=".8" fill="#c5edff"/><rect x="13" y="12" width="4" height="3" rx=".8" fill="#c5edff"/><rect x="19" y="12" width="4" height="3" rx=".8" fill="#c5edff"/><rect x="7" y="17" width="4" height="2.5" rx=".8" fill="#c5edff"/><rect x="13" y="17" width="10" height="2.5" rx=".8" fill="#c5edff"/></svg></span>حاسبة</button>
+        <button class="toolbar-btn toolbar-exchange-buy" data-window="exchange-buy" type="button" title="شراء عملة"><span class="toolbar-symbol">↓</span>شراء عملة</button>
+        <button class="toolbar-btn toolbar-exchange-sell" data-window="exchange-sell" type="button" title="بيع عملة"><span class="toolbar-symbol">↑</span>بيع عملة</button>
+        <button class="toolbar-btn toolbar-voucher-payment" data-window="voucher-payment" type="button" title="سند صرف"><span class="toolbar-symbol">−</span>سند صرف</button>
+        <button class="toolbar-btn toolbar-voucher-receipt" data-window="voucher-receipt" type="button" title="سند قبض"><span class="toolbar-symbol">＋</span>سند قبض</button>
+        <button class="toolbar-btn toolbar-transfer-outgoing" data-window="transfers-outgoing" type="button" title="حوالة صادرة"><span class="toolbar-symbol">⇢</span>حوالة صادرة</button>
+        <button class="toolbar-btn toolbar-transfer-incoming" data-window="transfers-incoming" type="button" title="حوالة واردة"><span class="toolbar-symbol">⇠</span>حوالة واردة</button>
+        <button class="toolbar-btn toolbar-reports" data-window="reports" type="button" title="مركز التقارير"><span class="toolbar-symbol">▤</span>التقارير</button>
+        <button class="toolbar-btn accounts-command toolbar-accounts" data-window="accounts" type="button" title="دليل الحسابات"><span class="toolbar-symbol">▥</span>الحسابات</button>
+        <button class="toolbar-btn simple-entries-command toolbar-entries" data-window="simple-entries" type="button" title="قيد محاسبي بسيط"><span class="toolbar-symbol">≡</span>قيود بسيطة</button>
+        <button class="toolbar-btn currency-command toolbar-currency" data-window="currency-settings" type="button" title="دليل العملات"><span class="toolbar-symbol">$</span>دليل العملات</button>
+        <span class="toolbar-divider" aria-hidden="true"></span>
+        <button class="toolbar-btn admin-trigger toolbar-admin" id="adminMenuToggle" type="button" aria-expanded="false" title="الإدارة والإعدادات"><span class="toolbar-symbol">⚙</span>الإدارة <b>▾</b></button>
+      </nav>
+      <div class="admin-menu" id="adminMenu" hidden>
+        <div class="admin-menu-title"><span>إدارة النظام</span><small>الأدوات مرتبة حسب العمل</small></div>
+        <div class="admin-menu-heading design-heading" data-admin-section="design">التصميم والمظهر</div>
+        <button class="admin-menu-item design-item" data-performance-tool="designTools" data-window="layout-controls" type="button"><i class="admin-menu-icon" aria-hidden="true">▣</i><b class="admin-menu-label">لوحة التحكم بالجداول والحقول</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item design-item" data-performance-tool="designTools" data-window="window-designer" type="button"><i class="admin-menu-icon" aria-hidden="true">▧</i><b class="admin-menu-label">مصمم النوافذ الداخلية</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item print-item" data-performance-tool="designTools" data-window="print-settings" type="button"><i class="admin-menu-icon" aria-hidden="true">▤</i><b class="admin-menu-label">إعدادات الطباعة وPDF وExcel</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item print-item" data-performance-tool="designTools" data-window="print-designer" type="button"><i class="admin-menu-icon" aria-hidden="true">▧</i><b class="admin-menu-label">مصمم الطباعة الشامل</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item sheets-item" data-performance-tool="designTools" data-window="sheets-designer" type="button"><i class="admin-menu-icon" aria-hidden="true">▤</i><b class="admin-menu-label">مصمم Google Sheets</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <div class="admin-menu-heading data-heading" data-admin-section="data">البيانات والملفات</div>
+        <button class="admin-menu-item import-export-item" data-performance-tool="fileCenter" data-window="import-export" type="button"><i class="admin-menu-icon" aria-hidden="true">⇅</i><b class="admin-menu-label">مركز الاستيراد والتصدير</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item data-item" data-performance-tool="dataAnalysis" data-window="data-analysis" type="button"><i class="admin-menu-icon" aria-hidden="true">◈</i><b class="admin-menu-label">مركز تحليل البيانات</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <div class="admin-menu-heading finance-heading" data-admin-section="finance">الصناديق والعمليات المالية</div>
+        <button class="admin-menu-item finance-item" data-window="cashboxes" type="button"><i class="admin-menu-icon" aria-hidden="true">▣</i><b class="admin-menu-label">دليل الصناديق</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item finance-item" data-window="cashbox-inventory" type="button"><i class="admin-menu-icon" aria-hidden="true">≡</i><b class="admin-menu-label">جرد الصناديق</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button id="chequesMenuItem" class="admin-menu-item finance-item" data-window="cheques" type="button" hidden><i class="admin-menu-icon" aria-hidden="true">□</i><b class="admin-menu-label">إدارة الشيكات الاختيارية</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <div class="admin-menu-heading system-heading" data-admin-section="system">النظام والنسخ</div>
+        <button class="admin-menu-item system-item" data-window="settings" type="button"><i class="admin-menu-icon" aria-hidden="true">⚙</i><b class="admin-menu-label">الإعدادات العامة والاتصال</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item system-item" data-window="backup-center" type="button"><i class="admin-menu-icon" aria-hidden="true">⟳</i><b class="admin-menu-label">النسخ والاستعادة المحلية وGoogle Drive</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item system-item" data-window="shortcut-manager" type="button"><i class="admin-menu-icon" aria-hidden="true">⌨</i><b class="admin-menu-label">إدارة الاختصارات</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <div class="admin-menu-heading security-heading" data-admin-section="security">المستخدمون والصلاحيات</div>
+        <button class="admin-menu-item system-item" data-window="user-access" type="button"><i class="admin-menu-icon" aria-hidden="true">♙</i><b class="admin-menu-label">المستخدمون والصلاحيات</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item security-item" data-window="groups" type="button"><i class="admin-menu-icon" aria-hidden="true">◫</i><b class="admin-menu-label">المجموعات والأدوار</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item security-item" data-window="device-access" type="button"><i class="admin-menu-icon" aria-hidden="true">▣</i><b class="admin-menu-label">أجهزة المستخدمين والجلسات</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item security-item" data-window="employees" type="button"><i class="admin-menu-icon" aria-hidden="true">◉</i><b class="admin-menu-label">دليل الموظفين</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item danger-item" data-window="change-password" type="button"><i class="admin-menu-icon" aria-hidden="true">⌁</i><b class="admin-menu-label">تغيير كلمة المرور</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <div class="admin-menu-heading audit-heading" data-admin-section="audit">الرقابة والمتابعة</div>
+        <button class="admin-menu-item audit-item" data-window="financial-controls" type="button"><i class="admin-menu-icon" aria-hidden="true">◈</i><b class="admin-menu-label">الرقابة والإقفال المالي</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+        <button class="admin-menu-item audit-item" data-window="alerts" type="button"><i class="admin-menu-icon" aria-hidden="true">◉</i><b class="admin-menu-label">مركز التنبيهات والمتابعة</b><em class="admin-menu-route" aria-hidden="true">‹</em></button>
+      </div>
+      <div class="admin-unlock-dialog" id="adminUnlockDialog" hidden role="dialog" aria-modal="true" aria-labelledby="adminUnlockTitle">
+        <div class="admin-unlock-card">
+          <div class="admin-unlock-icon" aria-hidden="true">⚿</div>
+          <div class="admin-unlock-copy"><h2 id="adminUnlockTitle">الإدارة محمية</h2><p>أدخل كلمة مرور مدير النظام لفتح أدوات الإدارة والإعدادات.</p></div>
+          <form id="adminUnlockForm" autocomplete="off">
+            <label for="adminUnlockPassword">كلمة مرور مدير النظام</label>
+            <input id="adminUnlockPassword" type="password" autocomplete="current-password" required maxlength="160" placeholder="أدخل كلمة المرور">
+            <div id="adminUnlockError" class="admin-unlock-error" role="alert"></div>
+            <div class="admin-unlock-actions"><button type="button" class="secondary-btn" id="adminUnlockCancel">إلغاء</button><button type="submit" class="primary-btn" id="adminUnlockSubmit">فتح الإدارة</button></div>
+          </form>
+          <small class="admin-unlock-note">سيبقى الفتح ساريًا خلال الجلسة الحالية لمدة 5 دقائق، ثم يطلب النظام التحقق من جديد.</small>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <header class="workspace-head">
+        <div><div class="breadcrumb">الرئيسية / <strong id="pageName">لوحة التحكم</strong></div><h1 id="pageTitle">مرحبًا بك، مدير النظام</h1></div>
+      </header>
+      <section id="view" class="view"></section>
+      <footer class="statusbar"><span>الحالة: متصل بقاعدة البيانات</span><span>الفرع: <b id="branchName">الفرع الرئيسي</b></span><span>العملة الأساسية: <b id="currencyName">ريال يمني</b></span><span>صراف — تشغيل محلي آمن</span></footer>
+    </main>
+  </div>
+
+  <div id="loginOverlay">
+    <form class="login-card" id="loginForm">
+      <div class="login-brand"><img class="login-app-icon" src="assets/sarafa-app-icon.png" alt="أيقونة نظام المتميز"><div><h2>دخول نظام المتميز</h2><p>نظام الصرافة والحوالات المحلي</p></div></div>
+      <div class="login-release-card" aria-label="إصدار التطبيق الحالي"><span class="login-release-label"><i aria-hidden="true">▣</i> الإصدار الحالي</span><strong id="loginReleaseVersion">3.24.9</strong><small>نسخة Windows</small></div>
+      <div class="login-form-fields"><div class="field"><label>اسم المستخدم</label><input id="loginUsername" autocomplete="username" value="admin" required></div>
+      <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" autocomplete="current-password" required></div></div>
+      <div class="login-error" id="loginError"></div>
+      <button class="primary-btn" type="submit" style="width:100%;margin-top:4px">تسجيل الدخول</button>
+      <button class="login-connection-toggle" id="forgotManagerPassword" type="button">نسيت كلمة مرور مدير النظام؟</button>
+      <section class="login-database-state checking" id="loginDatabaseState" aria-live="polite"><span class="login-state-dot" id="loginStateDot"></span><div><span class="login-connection-state-label" id="loginConnectionStateLabel">جارٍ الفحص</span><strong id="loginStateTitle">جارٍ فحص اتصال MySQL…</strong><small id="loginStateDetail">يظهر وضع الاتصال هنا قبل تسجيل الدخول.</small></div><button class="login-status-refresh" type="button" id="refreshLoginConnection" title="فحص الاتصال الآن">⟳</button></section>
+      <button class="login-connection-toggle" id="loginConnectionToggle" type="button">⚙ إعداد اتصال MySQL</button>
+      <section class="login-connection-unlock" id="loginConnectionUnlockPanel" hidden aria-live="polite"><strong>إعدادات اتصال MySQL محمية</strong><small>أدخل كلمة الحماية التي حددها مدير النظام لعرض الإعدادات أو تعديلها.</small><div><input id="loginConnectionUnlockPassword" type="password" autocomplete="current-password" placeholder="كلمة حماية اتصال MySQL"><button class="secondary-btn" id="loginConnectionUnlock" type="button">فتح الإعدادات</button></div><span id="loginConnectionUnlockStatus"></span></section>
+      <section class="login-connection-panel" id="loginConnectionPanel" hidden>
+        <div class="login-connection-heading"><h3>اتصال قاعدة البيانات المحلية</h3><span id="loginDbConnectionStatus" class="login-connection-pill" data-state="checking"><i aria-hidden="true"></i><b>جارٍ الفحص</b></span></div>
+        <p>هذه البيانات تخص MySQL وليست كلمة مرور المستخدم admin.</p>
+        <div class="login-connection-grid">
+          <div class="field"><label>الخادم</label><input id="loginDbHost" value="127.0.0.1"></div>
+          <div class="field"><label>المنفذ</label><input id="loginDbPort" type="number" value="3306"></div>
+          <div class="field"><label>اسم المستخدم</label><input id="loginDbUser" value="sarafa_user"></div>
+          <div class="field"><label>كلمة مرور MySQL</label><input id="loginDbPassword" type="password" autocomplete="new-password"></div>
+          <div class="field"><label>اسم قاعدة البيانات</label><input id="loginDbName" value="sarafa"></div>
+        </div>
+        <div class="login-connection-actions"><button class="secondary-btn" id="saveLoginConnection" type="button">حفظ واختبار الاتصال</button><span id="loginConnectionStatus"></span></div>
+      </section>
+      <p class="login-hint">عند تهيئة قاعدة جديدة فقط، كلمة مرور المستخدم <b>admin</b> الافتراضية هي <b>admin</b>. غيّرها فورًا بعد أول دخول.</p>
+    </form>
+  </div>
+  <div id="toast" class="toast"></div>
+  <!-- أدوات تؤجَّل بعد بدء التطبيق وتُحمَّل عند فتحها: calculator.js، operation-chrome.js، color-palette.js، layout-controls.js، print-designer.js، print-designer-compact.js، ui-designer.js، ui-studio-popovers.js، ui-studio-history.js، window-designer.js، dashboard-designer.js، sheets-designer.js، design-library.js، whatsapp-files.js، data-analysis.js، pre-update-backups.js، feature-controls.js -->
+  <script src="runtime-loader.js"></script>
+  <script src="amount-in-words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

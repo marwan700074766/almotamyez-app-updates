@@ -1,2 +1,5 @@
 *.exe
 *.exe
+.env
+node_modules/
+extracted-source/node_modules/

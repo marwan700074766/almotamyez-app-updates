@@ -1,0 +1,49 @@
+{
+  "name": "sarafa-desktop",
+  "version": "3.24.16",
+  "description": "نظام الصراف الشامل - نسخة Windows",
+  "main": "main.js",
+  "author": "Manus AI",
+  "license": "MIT",
+  "scripts": {
+    "dist:win": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.sarafa.desktop",
+    "productName": "Sarafa Desktop",
+    "artifactName": "Sarafa-Setup-${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!data/**",
+      "!updates/**"
+    ],
+    "win": {
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "marwan700074766",
+      "repo": "almotamyez-app",
+      "releaseType": "release"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marwan700074766/almotamyez-app.git"
+  },
+  "dependencies": {
+    "googleapis": "^175.0.0",
+    "mysql2": "^3.14.0",
+    "nodemailer": "^9.0.5",
+    "pdfjs-dist": "^6.2.108",
+    "xlsx": "^0.18.5"
+  }
+}

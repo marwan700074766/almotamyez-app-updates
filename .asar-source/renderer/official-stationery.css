@@ -1,0 +1,265 @@
+/* الكليشة الرسمية الموحدة لسندات القبض والصرف والحوالات */
+.official-stationery-document {
+  box-sizing: border-box;
+  position: relative;
+  width: min(794px, 100%);
+  min-height: 1123px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+  padding: 34px 48px 30px;
+  color: #080808;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.official-letterhead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 118px minmax(0, 1fr);
+  direction: ltr;
+  align-items: start;
+  gap: 20px;
+  min-height: 121px;
+}
+.official-header-en,
+.official-header-ar { display: grid; align-content: start; gap: 1px; font-weight: 700; line-height: 1.18; }
+.official-header-en,
+.official-header-ar,
+.official-logo-wrap { transform: translateY(9px); }
+.official-header-en { text-align: left; font-family: Arial, sans-serif; font-size: 11.6px; }
+.official-header-ar { direction: rtl; text-align: right; font-family: Tahoma, Arial, sans-serif; font-size: 11.6px; }
+.official-header-en strong,
+.official-header-ar strong { font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+.official-header-en strong { white-space: pre; }
+.official-header-en span,
+.official-header-ar span { white-space: normal; }
+.official-header-en b,
+.official-header-ar b { font-weight: 800; }
+.official-logo-wrap { display: grid; place-items: center; align-self: start; }
+.official-logo-wrap img { width: 92px; height: 86px; object-fit: contain; }
+.official-caption { display: flex; justify-content: center; margin-top: -21px; }
+.official-caption span { display: block; min-width: 176px; border: 1px solid #111; padding: 3px 24px; text-align: center; font-weight: 800; line-height: 1.1; }
+.official-rule { height: 1px; margin-top: -1px; background: #777; }
+.official-date { margin-top: 7px; text-align: center; font-size: 13px; }
+.official-date b { margin-left: 5px; }
+.official-summary {
+  display: grid;
+  grid-template-columns: 1fr 2.45fr 1fr;
+  direction: ltr;
+  gap: 26px;
+  align-items: stretch;
+  margin: 20px 14px 0;
+}
+.official-number,
+.official-kind,
+.official-amount { min-height: 42px; border: 1px solid #111; direction: rtl; text-align: center; }
+.official-number { display: grid; align-content: center; gap: 3px; padding: 5px 8px; }
+.official-number span { color: #b22026; text-decoration: underline; font-weight: 800; }
+.official-number strong { color: #c42026; font-size: 17px; font-weight: 900; direction: ltr; }
+.official-kind { display: grid; place-items: center; padding: 8px 12px; font-size: 14px; font-weight: 800; }
+.official-amount { display: grid; place-content: center; gap: 0; padding: 4px 7px; color: #c42026; font-weight: 900; }
+.official-amount > div { display:flex; align-items:baseline; justify-content:center; gap:5px; direction:ltr; }
+.official-amount strong { direction: ltr; font-size: 17px; }
+.official-amount span { direction:rtl; font-size: 13px; }
+.official-amount small { font-size: 12px; line-height: 1; }
+.official-details { display: grid; margin: 4px 14px 0; }
+.official-detail-row { display: grid; grid-template-columns: 88px minmax(0,1fr) 92px; align-items: start; min-height: 28px; gap: 8px; padding: 4px 0 3px; }
+.official-detail-row > span { text-align: right; font-weight: 800; }
+.official-detail-row > b { text-align: center; font-weight: 700; }
+.official-detail-row > em { color: #111; text-align: center; font-style: normal; font-weight: 700; }
+.official-amount-words-row > b { grid-column: 2 / 4; border: 1px solid #111; min-height: 24px; display: grid; place-items: center; padding: 1px 8px; }
+.official-amount-words-row > em { display: none; }
+.official-signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; margin: 22px 14px 0; border-top: 1px solid #111; padding: 22px 28px 38px; }
+.official-signatures > div:first-child { text-align: right; }
+.official-signatures > div:last-child { text-align: center; }
+.official-print-meta { border-bottom: 1px solid #111; margin: 0 14px; padding: 0 0 8px; text-align: right; font-size: 13px; font-weight: 700; }
+.official-page-footer { position: absolute; right: 48px; bottom: 26px; left: 48px; display: flex; justify-content: space-between; align-items: center; direction: ltr; font-size: 12.5px; font-weight: 700; }
+.official-page-footer span { direction: rtl; }
+.official-page-footer small { position: absolute; left: 50%; transform: translateX(-50%); color: #b22026; }
+.print-preview-sheet:has(.official-stationery-document) { align-items: flex-start; background: #d9dfe4; padding: 24px; }
+.print-preview-sheet .official-stationery-document { box-shadow: 0 10px 28px rgba(24,45,66,.24); }
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  .official-stationery-document { width: 210mm; min-height: 297mm; max-width: none; margin: 0; border:0!important; padding: 10mm 13mm 8mm; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .official-page-footer { right: 4mm; bottom: 1mm; left: 4mm; }
+  .print-preview-sheet .official-stationery-document { box-shadow: none; }
+}
+
+/* شبكة الحوالة الرسمية: نفس تسطير وتقسيم نموذج مانوس الصادر والوارد */
+.official-transfer-grid {
+  margin: 4px 14px 0;
+  border: 1px solid #111;
+  direction: rtl;
+  font-size: 12.5px;
+}
+.official-transfer-row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 150px;
+  min-height: 30px;
+  border-bottom: 1px solid #111;
+  align-items: stretch;
+}
+.official-transfer-row:last-child { border-bottom: 0; }
+.official-transfer-row > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 3px 7px;
+  text-align: center;
+  font-weight: 700;
+}
+.official-transfer-row > * + * { border-right: 1px solid #111; }
+.official-transfer-label {
+  justify-content: flex-start !important;
+  border-right: 0 !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
+}
+.official-transfer-row b { font-weight: 700; }
+.official-transfer-row strong {
+  color: #9e2025;
+  font-weight: 800;
+  direction: rtl;
+}
+.official-transfer-account {
+  grid-template-columns: 112px minmax(0, 1fr) 150px;
+  border-bottom: 0;
+}
+.official-transfer-account em {
+  font-style: normal;
+  justify-content: flex-start;
+  border-right: 1px solid #111;
+}
+.official-transfer-amount { min-height: 34px; }
+.official-transfer-amount strong { line-height: 1.25; }
+.official-transfer-routing strong { direction: ltr; color: #111; }
+.official-transfer-note { min-height: 34px; }
+.official-transfer-incoming .official-transfer-row > strong { color: #111; }
+@media print {
+  .official-transfer-grid { margin-top: 1mm; font-size: 12px; }
+  .official-transfer-row { min-height: 8mm; grid-template-columns: 30mm minmax(0,1fr) 39mm; }
+  .official-transfer-row > * { padding: 1mm 2mm; }
+  .official-transfer-note { min-height: 9mm; }
+}
+
+.official-transfer-account-line {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 150px;
+  direction: rtl;
+  margin: 4px 14px 0;
+  min-height: 29px;
+  align-items: center;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.official-transfer-account-line > span { text-align: right; font-weight: 800; }
+.official-transfer-account-line > b { text-align: center; }
+.official-transfer-account-line > em { text-align: right; font-style: normal; font-weight: 800; }
+@media print {
+  .official-transfer-account-line { margin-top: 1mm; min-height: 8mm; grid-template-columns: 30mm minmax(0,1fr) 39mm; font-size: 12px; }
+}
+
+/* مطابقة الخط الأصلي: الكليشة تستخدم Arial Bold؛ لا نخلط Tahoma أو أوزانًا تركيبية */
+.official-stationery-document,
+.official-stationery-document * {
+  font-family: Arial, sans-serif !important;
+  font-synthesis: none;
+}
+.official-stationery-document { font-size: 12px; line-height: 1.2; }
+.official-header-en,
+.official-header-ar { font-size: 11px; line-height: 1.16; font-weight: 700; }
+.official-header-en strong,
+.official-header-ar strong { font-size: 12px; font-weight: 700; }
+.official-caption span { font-size: 11px; font-weight: 700; }
+.official-date { font-size: 12px; font-weight: 700; }
+.official-number span { font-size: 11px; font-weight: 700; }
+.official-number strong,
+.official-amount strong { font-size: 16px; font-weight: 700; }
+.official-amount span { font-size: 12px; font-weight: 700; }
+.official-amount small { font-size: 11px; }
+.official-kind { font-size: 13px; font-weight: 700; }
+.official-detail-row,
+.official-transfer-row,
+.official-transfer-account-line { font-size: 11px; line-height: 1.2; }
+.official-transfer-row > *,
+.official-transfer-account-line > *,
+.official-detail-row > * { font-weight: 700; }
+.official-print-meta,
+.official-page-footer { font-size: 11px; font-weight: 700; }
+@media print {
+  .official-stationery-document { font-size: 10pt; line-height: 1.16; }
+  .official-header-en,
+  .official-header-ar { font-size: 9pt; }
+  .official-header-en strong,
+  .official-header-ar strong { font-size: 10pt; }
+  .official-caption span { font-size: 9pt; }
+  .official-date { font-size: 9.5pt; }
+  .official-number span { font-size: 9pt; }
+  .official-number strong,
+  .official-amount strong { font-size: 13pt; }
+  .official-amount span { font-size: 10pt; }
+  .official-amount small { font-size: 9pt; }
+  .official-kind { font-size: 10pt; }
+  .official-detail-row,
+  .official-transfer-row,
+  .official-transfer-account-line { font-size: 9pt; }
+  .official-print-meta,
+  .official-page-footer { font-size: 9pt; }
+}
+
+/* القالب الحرفي: خلفية PDF الأصلية، والواجهة تملأ القيم المتغيرة فقط */
+.official-reference-stationery {
+  position: relative;
+  width: min(794px, 100%);
+  aspect-ratio: 595 / 842;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  color: #090909;
+  font-family: Arial, sans-serif !important;
+  font-synthesis: none;
+}
+.official-reference-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; display: block; }
+.official-reference-values { position: absolute; inset: 0; direction: rtl; font-family: Arial, sans-serif !important; font-size: 12px; font-weight: 700; line-height: 1.05; }
+.ref-value { position: absolute; display: block; overflow: hidden; white-space: nowrap; text-align: center; font-family: Arial, sans-serif !important; font-weight: 700; color: #111; }
+.ref-out-number,.ref-in-number { left: 10.5%; top: 18.8%; width: 12.5%; color: #b51f25; font-size: 17px; }
+.ref-out-date,.ref-in-date { left: 39%; top: 14.7%; width: 22%; font-size: 12px; }
+.ref-out-amount,.ref-in-amount { right: 9.5%; top: 18.8%; width: 13.5%; color: #b51f25; font-size: 16px; }
+.ref-out-currency,.ref-in-currency { right: 9.5%; top: 21.2%; width: 13.5%; color: #b51f25; font-size: 12px; }
+.ref-out-account,.ref-in-account { right: 18%; top: 24.1%; width: 58%; }
+.ref-out-words,.ref-in-words { left: 23%; top: 27.5%; width: 54%; }
+.ref-out-commission { left: 7.0%; top: 27.4%; width: 18%; color: #b51f25; }
+.ref-out-total { left: 7.0%; top: 33.9%; width: 18%; color: #b51f25; }
+.ref-out-sender,.ref-in-sender { left: 25%; top: 30.7%; width: 50%; }
+.ref-out-beneficiary,.ref-in-beneficiary { left: 25%; top: 34.0%; width: 50%; }
+.ref-out-reference,.ref-in-reference { left: 7%; top: 37.7%; width: 18%; direction: ltr; }
+.ref-out-agent,.ref-in-agent { left: 25%; top: 37.7%; width: 50%; }
+.ref-out-notes,.ref-in-notes { left: 25%; top: 40.9%; width: 50%; }
+.ref-in-sender-phone { left: 7%; top: 29.0%; width: 18%; direction: ltr; }
+.ref-in-sender { top: 29.0%; }
+.ref-in-beneficiary { top: 32.2%; }
+.ref-in-recipient-phone { top: 32.2%; }
+.ref-in-reference { top: 35.6%; }
+.ref-in-agent { top: 35.6%; }
+.ref-in-notes { top: 38.9%; }
+.ref-in-recipient-phone { left: 7%; top: 32.2%; width: 18%; direction: ltr; }
+.ref-in-recipient-name { left: 25%; top: 42.1%; width: 50%; }
+.ref-in-recipient-phone-final { top: 44.9%; }
+.ref-in-recipient-phone-final { left: 25%; top: 44.9%; width: 50%; direction: ltr; }
+.ref-print-meta { right: 8%; bottom: 5.0%; width: 40%; text-align: right; font-size: 11px; direction: rtl; }
+.ref-page-left { left: 1.5%; bottom: 1.0%; width: 15%; text-align: left; font-size: 10px; direction: rtl; }
+.ref-page-right { right: 1.5%; bottom: 1.0%; width: 18%; text-align: right; font-size: 10px; direction: ltr; }
+.print-preview-sheet:has(.official-reference-stationery) { align-items: flex-start; padding: 24px; background: #d9dfe4; }
+@media print {
+  .official-reference-stationery { width: 210mm; height: 297mm; max-width: none; aspect-ratio: auto; margin: 0; }
+  .official-reference-values { font-size: 10pt; }
+  .ref-out-number,.ref-in-number { font-size: 14pt; }
+  .ref-out-amount,.ref-in-amount { font-size: 13pt; }
+  .ref-out-currency,.ref-in-currency { font-size: 10pt; }
+  .ref-out-date,.ref-in-date { font-size: 9pt; }
+  .ref-print-meta { font-size: 9pt; }
+  .print-preview-sheet:has(.official-reference-stationery) { padding: 0; background: #fff; }
+}
