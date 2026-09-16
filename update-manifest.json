@@ -1,10 +1,12 @@
 {
   "format": "sarafa-desktop-update",
   "version": "3.24.16",
+  "publishedAt": "2026-09-16T13:46:52.786Z",
+  "releaseNotes": "إصدار 3.24.16: إصلاح قناة التحديث وإتاحة الإصدار عبر رابط Release مباشر.",
   "download": {
-    "url": "https://github.com",
-    "sha256": "41e503df7b8fa3a0c5c4e9081a2d67d71b87a8b6da4968df324bf8314bb3a0c5",
-    "size": 109051904,
-    "fileName": "Sarafa-Setup-3.24.16.exe"
+    "url": "https://github.com/marwan700074766/almotamyez-app-updates/releases/download/v3.24.16/Sarafa-Desktop-Setup-3.24.16.exe",
+    "sha256": "77c3c8e9b708bb2d04bde5b4b87f93d57175fde201491402293350554ffa02d1",
+    "size": 121316493,
+    "fileName": "نظام الصراف الشامل Setup 3.24.16.exe"
   }
 }
