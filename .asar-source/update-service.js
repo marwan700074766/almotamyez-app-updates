@@ -27,7 +27,7 @@ function isHttpsUrl(value) {
 
 function safeFileName(value) {
   const fileName = path.basename(String(value || '').trim());
-  if (!fileName || fileName === '.' || fileName === '..' || !/\.exe$/i.test(fileName)) throw new Error('اسم ملف التحديث يجب أن ينتهي بـ EXE');
+  if (!fileName || fileName === '.' || fileName === '..' || !/\.(?:exe|asar)$/i.test(fileName)) throw new Error('اسم ملف التحديث يجب أن ينتهي بـ EXE أو ASAR');
   return fileName.replace(/[^\p{L}\p{N}._ -]/gu, '_').slice(0, 160);
 }
 
